@@ -1,10 +1,10 @@
-
 name: Deploy Documentation
+
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
 
-
+# This global permissions block ensures the token can be minted
 permissions:
   contents: read
   pages: write
@@ -13,14 +13,24 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    # Added environment block to link it to the Pages settings
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.' # Serves your README/docs from the root
+          # This points to where your docs/HTML files are. 
+          # Use "." if your site is in the root.
+          path: '.' 
+
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
