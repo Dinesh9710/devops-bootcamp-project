@@ -46,7 +46,7 @@ jobs:
             --parameters 'commands=[
               "aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 025073416563.dkr.ecr.ap-southeast-1.amazonaws.com",
               "docker pull 025073416563.dkr.ecr.ap-southeast-1.amazonaws.com/devops-bootcamp/final-project-dineshvar:latest",
-              "docker stop web-app || true",
-              "docker rm web-app || true",
-              "docker run -d --name web-app -p 80:80 025073416563.dkr.ecr.ap-southeast-1.amazonaws.com/devops-bootcamp/final-project-dineshvar:latest"
+              "docker stop dineshvar-site || true",
+              "docker rm dineshvar-site || true",
+              "docker run -d --name dineshvar-site -p 80:80 025073416563.dkr.ecr.ap-southeast-1.amazonaws.com/devops-bootcamp/final-project-dineshvar:latest"
             ]'
