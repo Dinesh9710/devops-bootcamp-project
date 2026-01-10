@@ -24,13 +24,13 @@ resource "aws_eip" "nat_eip" {
   domain = "vpc"
 }
 
-/*#resource "aws_nat_gateway" "ngw" {
+resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.nat_eip.id
   subnet_id     = aws_subnet.public.id
   tags          = { Name = "devops-ngw" }
 }
-*/
-# Routing
+
+#Routing
 resource "aws_route_table" "public_route" {
   vpc_id = aws_vpc.devops_vpc.id
   route {
@@ -42,12 +42,12 @@ resource "aws_route_table" "public_route" {
 
 resource "aws_route_table" "private_route" {
   vpc_id = aws_vpc.devops_vpc.id
-  /*
+  
   route {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.ngw.id
   }
-  */
+  
   tags = { Name = "devops-private-route" }
 }
 
