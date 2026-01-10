@@ -1,0 +1,51 @@
+---
+- name: Step 5 - Deploy Monitoring Stack
+  hosts: all
+  become: yes
+
+  tasks:
+    # --- SECTION 1: WEB SERVER (The Data Source) ---
+    - name: Run Node Exporter on Web Server
+      when: "'web' in group_names"
+      docker_container:
+        name: node-exporter
+        image: prom/node-exporter:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "9100:9100"
+
+    # --- SECTION 2: MONITORING SERVER (The Dashboard) ---
+    - name: Setup Monitoring Server Tools
+      when: "'monitoring' in group_names"
+      block:
+        - name: Ensure Docker is installed
+          apt:
+            name: docker.io
+            state: present
+            update_cache: yes
+
+        - name: Copy Prometheus Config
+          copy:
+            src: ./prometheus.yml
+            dest: /tmp/prometheus.yml
+
+        - name: Deploy Prometheus Container
+          docker_container:
+            name: prometheus
+            image: prom/prometheus:latest
+            state: started
+            restart_policy: always
+            ports:
+              - "9090:9090"
+            volumes:
+              - /tmp/prometheus.yml:/etc/prometheus/prometheus.yml
+
+        - name: Deploy Grafana Container
+          docker_container:
+            name: grafana
+            image: grafana/grafana-oss:latest
+            state: started
+            restart_policy: always
+            ports:
+              - "3000:3000"

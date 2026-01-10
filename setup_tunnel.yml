@@ -1,0 +1,28 @@
+---
+- name: Step 6 - Deploy Cloudflare Tunnel
+  hosts: monitoring
+  become: yes
+  vars:
+    # Copy the FULL token from your Cloudflare dashboard screenshot
+    tunnel_token: "eyJhIjoiZTQ2ZDUzMmE2ZDI3YmI2ZjZhMDA5MjlkNzVlYzk1MzIiLCJ0IjoiZDFlZjBkNTktMTZmOS00ODkyLWI3ZTgtZWVhMWNhZWZkMzgzIiwicyI6Ik5UaG1NR0l3TnpVdE9USXdNUzAwTlRBeUxXSXdZekV0TXpGalpqTXlZbUl5T1RVNSJ9"
+
+  tasks:
+    - name: Download Cloudflared GPG key
+      shell: |
+        sudo mkdir -p --mode=0755 /usr/share/keyrings
+        curl -fSSl https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
+
+    - name: Add Cloudflared repository
+      shell: |
+        echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared any main' | sudo tee /etc/apt/sources.list.d/cloudflared.list
+
+    - name: Install cloudflared
+      apt:
+        update_cache: yes
+        name: cloudflared
+        state: present
+
+    - name: Install and Start Tunnel Service
+      command: "cloudflared service install {{ tunnel_token }}"
+      args:
+        creates: /etc/systemd/system/cloudflared.service
