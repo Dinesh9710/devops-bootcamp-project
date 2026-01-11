@@ -1,4 +1,7 @@
 # 🛡️ Trust Me, I’m a DevOps Engineer
+
+# [🔗 CLICK HERE TO VIEW SOURCE CODE ON GITHUB](https://github.com/dinesh9710/devops-bootcamp-project)
+
 **End-to-End Automated AWS Infrastructure & CI/CD Pipeline**
 
 [![Documentation](https://img.shields.io/badge/Docs-GitHub_Pages-blue)](https://dinesh9710.github.io/devops-bootcamp-project/)
