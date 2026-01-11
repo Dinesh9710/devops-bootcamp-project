@@ -53,4 +53,4 @@ As an SRE-focused project, visibility is key:
 * **Prometheus:** Scrapes system metrics (CPU, RAM, Disk) from the Web Server.
 * **Grafana:** Visualizes health data in real-time dashboards to identify performance bottlenecks.
 
----
+--- 
