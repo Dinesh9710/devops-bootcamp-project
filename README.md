@@ -57,3 +57,13 @@ As an SRE-focused project, visibility is key:
 * **Grafana:** Visualizes health data in real-time dashboards to identify performance bottlenecks.
   
 --- 
+## 💰 Infrastructure Status: Terminated
+To avoid ongoing AWS charges (specifically for the NAT Gateway and Elastic IPs), all resources have been destroyed using:
+`terraform destroy -auto-approve`
+
+**Final Cleanup Checklist:**
+- [x] EC2 Instances terminated
+- [x] NAT Gateway deleted
+- [x] Elastic IPs released
+- [x] S3 State Bucket removed
+
